@@ -40,6 +40,7 @@
 - name: Install certificate files
   include_tasks: certificates.yml
   tags: httpd
+  when: ansible_os_family == "RedHat"
 
 - name: Install mod_ssl configuration file
   template:
@@ -54,7 +55,7 @@
 
 - name: Ensure Apache is always running
   service:
-    name: httpd
+    name: "{{ httpd_service }}"
     state: started
     enabled: true
   tags: httpd
